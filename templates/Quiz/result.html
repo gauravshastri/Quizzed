@@ -1,0 +1,52 @@
+{% extends "Login/base.html" %}
+
+{% block title %}Quiz{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+<br><br>
+
+<div class="row">
+
+<div class="col-md-4">
+<h1>Your Result:</h1>
+<h3>{{ score }} answer{{ score|pluralize }} correct...</h3>
+
+<br><br>
+
+</div>
+
+<div class="col-md-4">
+<h1>Hi {{ user }}!!</h1>
+<h3>Your Opponent : {% for m in challenge.member2.all %}{{ m }}{% endfor %}</h3>
+
+<br><hr><br>
+
+<h4>
+<li><b>Quiz Room : {{ challenge.pk }}</b></li>
+<li>Member 1 : {% for m in challenge.member1.all %}{{ m }}{% endfor %}</li>
+<li>Member 2 : {% for m in challenge.member2.all %}{{ m }}{% endfor %}</li>
+<li>Marks of Member 1 : {{ challenge.marks1 }}</li>
+<li>Marks of Member 2 : {{ challenge.marks2 }}</li>
+<li>Start Quiz 1 : {{ challenge.startQuiz1 }}</li>
+<li>Start Quiz 2 : {{ challenge.startQuiz2 }}</li>
+</h4>
+
+<br><br>
+<a href="?end={{ challenge.pk }}" class="btn btn-lg btn-danger">End Challenge</a><br>
+
+
+<br><br><br>{{ msg }}
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}
+

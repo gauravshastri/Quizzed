@@ -1,0 +1,52 @@
+{% extends "Login/base.html" %}
+
+{% block title %}{{ user.name }} - Friends{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="col-lg-6">
+		<h1>List of friends:</h1>
+		<div class="jumbotron">
+			{% for friend in friends %}
+				<div class="well"><li class="col-lg-6">{{ friend.name }}</li>
+				<a href="/Login/messages/?friend={{ friend.userID }}" class="btn btn-lg btn-warning">Send Message</a>
+			</div>
+			{% endfor %}
+			{% if friends %}
+			{% else %}
+				<p>You have no friends</p>
+			{% endif %}
+		</div>
+		
+		<hr>
+		{% for pr in pending_requests %}
+		<div class="well"><li class="col-lg-8">{{ pr.name }}</li>
+			<a href="?accept={{ pr.userID }}" class="btn btn-lg btn-success">Accept Request</a>
+		</div>
+		{% endfor %}
+	</div>
+
+
+	<div class="col-lg-6">
+		<h1> People you may know: </h1>
+			{% for person in persons %}
+				{% if person in friends %}
+					{% else %}
+				{% if person in sent_requests %}
+					{% else %}
+				{% if person in pending_requests %}
+					{% else %}
+					<div class="well"><li class="col-lg-8">{{ person.name }}</li>
+					<a href="?id={{ person.userID }}" class="btn btn-lg btn-primary">Add Friend</a>
+					</div>
+				{% endif %}
+				{% endif %}
+				{% endif %}
+			{% endfor %}
+	</div>
+</div>
+
+{{ msg }}
+
+{% endblock %}

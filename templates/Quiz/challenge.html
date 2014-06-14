@@ -1,0 +1,36 @@
+{% extends "Login/base.html" %}
+
+{% block title %}Challenge{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+<br><br>
+
+<div class="col-md-4">
+<h1>Hi {{ user }}!!</h1>
+<h3>Your Opponent : {{ friend }}</h3>
+
+<br><hr><br>
+
+<h4>
+<li><b>Quiz Room : {{ challenge.pk }}</b></li>
+<li>Member 1 : {% for m in challenge.member1.all %}{{ m }}{% endfor %}</li>
+<li>Member 2 : {% for m in challenge.member2.all %}{{ m }}{% endfor %}</li>
+</h4>
+
+<br><br>
+<a href="?quizroom={{ challenge.pk }}" class="btn btn-lg btn-success">Start Quiz</a><br>
+
+<br><br>
+<a href="?end={{ challenge.pk }}" class="btn btn-lg btn-danger">End Challenge</a><br>
+
+
+<br><br><br>{{ msg }}
+</div>
+
+
+</div>
+
+{% endblock %}

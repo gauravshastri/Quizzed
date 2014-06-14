@@ -1,0 +1,88 @@
+{% extends "Login/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}{{ friend.name }}{% endblock %}
+
+{% block header %}
+
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" language="JavaScript">
+
+$(document).ready(function(){
+
+$('#confirm-delete').on('show.bs.modal', 
+	function(e){
+		$(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
+	}
+);
+
+});
+
+
+var auto_refresh = setInterval(
+	function()
+	{
+		$('#refresh').load("/Login/messages/?friend={{ friend.userID }} #refresh").fadeIn('1000');
+	}, 1000);
+
+</script>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<div class="container">
+<h1>{{ friend.name }}</h1>
+<hr>
+
+<form method="POST" action="">
+{% csrf_token %}
+	<textarea name="message" placeholder="Type your message here" rows="3" class="form-control"></textarea><br>
+	<input type="submit" value="Send Message" class="btn btn-success pull-right">
+</form>
+</div>
+
+<div id="refresh">
+<div class="container">
+<hr><h4>
+{% for message in messages reversed %}
+	<b>{{ message.sender }} : </b>
+	{{ message.message_text }}
+	<div class="pull-right">
+	<a data-href="/Login/messages/?friend={{ friend.userID }}&delete={{ message.pk }}" data-toggle="modal" data-target="#confirm-delete" href=""><i class="glyphicon glyphicon-remove"></i></a>
+	</div>
+	<br>
+	<font color="#AAAAAA"><h5>{{ message.sent_date|timesince }} ago...</h5></font>
+	
+	
+	<br>
+{% endfor %}</h4>
+</div>
+</div>
+
+
+
+<div class="modal fade" id="confirm-delete" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				Delete Post...
+			</div>
+			<div class="modal-body">
+				Are you sure you want to proceed with deletion?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<a href="" class="btn btn-danger danger">Delete</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+{% endblock %}

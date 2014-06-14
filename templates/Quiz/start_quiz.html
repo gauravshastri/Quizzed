@@ -1,0 +1,145 @@
+{% extends "Login/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Challenge{% endblock %}
+
+{% block header %}
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/jquery.countdown360.js" %}" type="text/javascript" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+window.onload = function timedText() {
+    var score = 0;
+    var attempt = 0;
+    var answer = "{{ questions.0.correct_option }}";
+
+    var t1 = setTimeout(function()
+      {
+       document.getElementById("option1").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option2").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option3").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option4").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("question").innerHTML = "{{ questions.1 }}";
+       document.getElementById("option1").innerHTML = "{{ questions.1.option1 }}";
+       document.getElementById("option2").innerHTML = "{{ questions.1.option2 }}";
+       document.getElementById("option3").innerHTML = "{{ questions.1.option3 }}";
+       document.getElementById("option4").innerHTML = "{{ questions.1.option4 }}";
+       answer = "{{ questions.1.correct_option }}";
+       attempt = 0;
+      },5000);
+    
+    var t1 = setTimeout(function()
+      {
+       document.getElementById("option1").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option2").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option3").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option4").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("question").innerHTML = "{{ questions.2 }}";
+       document.getElementById("option1").innerHTML = "{{ questions.2.option1 }}";
+       document.getElementById("option2").innerHTML = "{{ questions.2.option2 }}";
+       document.getElementById("option3").innerHTML = "{{ questions.2.option3 }}";
+       document.getElementById("option4").innerHTML = "{{ questions.2.option4 }}";
+       answer = "{{ questions.2.correct_option }}";
+       attempt = 0;
+      },10000);
+    
+    var t1 = setTimeout(function()
+      {
+       document.getElementById("option1").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option2").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option3").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option4").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("question").innerHTML = "{{ questions.3 }}";
+       document.getElementById("option1").innerHTML = "{{ questions.3.option1 }}";
+       document.getElementById("option2").innerHTML = "{{ questions.3.option2 }}";
+       document.getElementById("option3").innerHTML = "{{ questions.3.option3 }}";
+       document.getElementById("option4").innerHTML = "{{ questions.3.option4 }}";
+       answer = "{{ questions.3.correct_option }}";
+       attempt = 0;
+      },15000);
+    
+    var t1 = setTimeout(function()
+      {
+       document.getElementById("option1").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option2").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option3").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("option4").className = "btn btn-lg btn-primary btn-block"
+       document.getElementById("question").innerHTML = "{{ questions.4 }}";
+       document.getElementById("option1").innerHTML = "{{ questions.4.option1 }}";
+       document.getElementById("option2").innerHTML = "{{ questions.4.option2 }}";
+       document.getElementById("option3").innerHTML = "{{ questions.4.option3 }}";
+       document.getElementById("option4").innerHTML = "{{ questions.4.option4 }}";
+       answer = "{{ questions.4.correct_option }}";
+       attempt = 0;
+      },20000);
+    
+    var t1 = setTimeout(function()
+      {document.getElementById("qset").innerHTML="<h2>Quiz Over!!!</h2>";
+       document.getElementById("score").innerHTML = score;       
+      },25000);
+
+    $("#qset a").on("click", function(){
+      attempt += 1;
+      var ans = ($(this).attr("id"));
+      if (attempt == 1) {
+          if (ans == answer) { 
+              score += 10;
+              document.getElementById(ans).className = "btn btn-lg btn-block btn-success";
+              document.getElementById("score").innerHTML = score;
+          }
+          else {
+              document.getElementById(ans).className = "btn btn-lg btn-block btn-danger";
+              document.getElementById(answer).className = "btn btn-lg btn-block btn-success";
+          };
+      };
+
+    })
+}
+
+
+</script>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+<br><br>
+
+<div class="col-md-8">
+
+<h1>Category : {{ category }}</h1>
+
+<hr>
+
+<div class="jumbotron" id="qset">
+
+<h3 class="well" id="question">{{ questions.0 }}</h3>
+<br><a href="#" class="btn btn-lg btn-primary btn-block" id="option1">{{ questions.0.option1 }}</a>
+<br><a href="#" class="btn btn-lg btn-primary btn-block" id="option2">{{ questions.0.option2 }}</a>
+<br><a href="#" class="btn btn-lg btn-primary btn-block" id="option3">{{ questions.0.option3 }}</a>
+<br><a href="#" class="btn btn-lg btn-primary btn-block" id="option4">{{ questions.0.option4 }}</a>
+
+</div>
+</div>
+
+
+<div class="col-md-4">
+
+<h3>{{ user }} : <div id="score">0</div></h3>
+<br>
+<h3>{{ member }} : <div id="score">0</div></h3>
+
+{{ quizroom }}
+{{ quizroom.member1.all }}
+{{ quizroom.member2.all }}
+
+</div>
+
+</div>
+
+{% endblock %}

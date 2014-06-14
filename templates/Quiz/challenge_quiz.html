@@ -1,0 +1,64 @@
+{% extends "Login/base.html" %}
+
+{% block title %}Quiz{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container">
+<br><br>
+
+{{ msg }}
+
+<h1>Category : {{ category }}</h1>
+
+
+<br><br>
+<div class="row">
+<div class="col-md-8">
+<form method="POST" action="/quiz/result?quizroom={{ quizroom }}">
+{% csrf_token %}
+<ol>
+	{% for ques in p %}
+	<li>{{ ques.question }}</li>
+	<div class="radio">
+		<label>
+			<input type="radio" name="answer[{{ forloop.counter }}]" value="option1">
+			{{ ques.option1 }}
+		</label>
+	</div>
+	<div class="radio">
+		<label>
+			<input type="radio" name="answer[{{ forloop.counter }}]" value="option2">
+			{{ ques.option2 }}
+		</label>
+	</div>
+	<div class="radio">
+		<label>
+			<input type="radio" name="answer[{{ forloop.counter }}]" value="option3">
+			{{ ques.option3 }}
+		</label>
+	</div>
+	<div class="radio">
+		<label>
+			<input type="radio" name="answer[{{ forloop.counter }}]" value="option4">
+			{{ ques.option4 }}
+		</label>
+	</div>
+	<hr><br>
+	{% endfor %}
+</ol>
+	<input type="submit" value="Submit" class="btn btn-lg btn-primary">
+</form>
+</div>
+
+
+
+
+
+</div>
+</div>
+
+
+{% endblock %}

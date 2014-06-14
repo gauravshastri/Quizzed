@@ -1,0 +1,59 @@
+{% extends "Login/base.html" %}
+
+{% load staticfiles %}
+
+{% block header %}
+    <link href="{% static "css/offcanvas.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Messages - {{ user.name }}{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+          <div class="jumbotron">
+            <h1>Hello, {{ user.name }}!</h1>
+            <p>This is the place where you have access to all your messages. You will find a few previous conversations below. On the right you have your friend-list. Click on any friend to start chat.</p>
+          </div>
+
+
+          <div class="row-fluid">
+
+          {% for items in finalList %}
+            <div class="col-6 col-sm-6-offset-1 col-lg-4 well">
+              <h2>{{ items.name }}</h2>
+
+              {% for message in items.messages %}
+              <li>{{ message.message_text|truncatewords_html:7 }}</li>
+              {% endfor %}
+              <p><a class="btn btn-danger" href="?friend={{ items.userID }}" role="button">View details &raquo;</a></p>
+            </div><!--/span-->
+          {% endfor %}
+
+          </div><!--/row-->
+
+
+
+        </div><!--/span-->
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+          <div class="list-group-offset">
+          {% for friend in friends %}  
+            <a href="?friend={{ friend.userID }}" class="list-group-item active">{{ friend.name }}</a><br>
+
+          {% endfor %}
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+    <script src="{% static "js/offcanvas.js" %}"></script>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "Login/base.html" %}
+
+{% block title %}Quiz{% endblock %}
+
+{% block header %}
+<style type="text/css">
+
+#new {
+    margin-top: 20px;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+<br><br>
+
+<div class="row">
+
+
+<div class="col-md-8">
+
+
+<h1>Categories : </h1>
+	<br>
+	{% for cat in category %}
+	{% if forloop.counter|divisibleby:6 %}
+	<a href="/quiz/category/?id={{ cat.category }}" class="new">
+	<div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-6 btn btn-warning" id="new">
+		<br><br><h4>{{ cat.category }}</h4><br><br><br>
+	</div></a>
+	{% elif forloop.counter|divisibleby:3 %}
+	<a href="/quiz/category/?id={{ cat.category }}" class="new">
+	<div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-6 btn btn-info" id="new">
+		<br><br><h4>{{ cat.category }}</h4><br><br><br>
+	</div></a>
+	{% elif forloop.counter|divisibleby:2 %}
+	<a href="/quiz/category/?id={{ cat.category }}" class="new">
+	<div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-6 btn btn-success" id="new">
+		<br><br><h4>{{ cat.category }}</h4><br><br><br>
+	</div></a>
+	{% else %}
+	<a href="/quiz/category/?id={{ cat.category }}" class="new">
+	<div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-6 btn btn-danger" id="new">
+		<br><br><h4>{{ cat.category }}</h4><br><br><br>
+	</div></a>
+	
+	{% endif %}
+	{% endfor %}
+
+</div>
+
+
+
+<div class="col-md-4">
+<h3>Received Requests : </h3>
+<br><br>
+{% for r in rr %}
+	<a href="/quiz/challenge/?quizroom={{ r.pk }}" class="btn btn-lg btn-warning">
+		{% for m in r.member1.all %}{{ m }} : Start Quiz{% endfor %}
+	</a>
+	<br>
+{% endfor %}
+<hr>
+<h3>Sent Requests : </h3>
+<br><br>
+{% for r in sr %}
+	<a href="/quiz/challenge/?quizroom={{ r.pk }}" class="btn btn-lg btn-danger">
+		{% for m in r.member2.all %}{{ m }} : Check Again{% endfor %}
+	</a>
+	<br>
+{% endfor %}
+<hr>
+<h3>Challenge your friends here:</h3><br>
+          <div class="list-group-offset">
+          {% for friend in friends %}  
+            <a href="/quiz/challenge/?friend={{ friend.userID }}" class="list-group-item active">{{ friend.name }}</a><br>
+          {% endfor %}
+          {{ msg }}
+          </div>
+</div>
+
+
+
+</div>
+</div>
+
+
+
+{% endblock %}
